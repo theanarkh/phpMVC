@@ -13,4 +13,5 @@
 	loadClass('View', 'core');
 	$router->init($_SERVER['REQUEST_URI'],$queryStringType);
 	$router->router();	
+	//2
 ?>
