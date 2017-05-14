@@ -23,14 +23,15 @@
 					if (isset($baseController->Model->{$argument[0]})) {
 						return;
 					}
-					$Model = $this->loadClass($argument, 'Model', $this->config['Model']);
+					$Model = $this->_loadClass($argument, 'Model', $this->config['Model']);
 					if (isset($Model)) {
-						$baseController->Model->{$argument[0]} = $Model;
+						$property = $argument[0].'Model';
+						$baseController->{$property} = $Model;
 					}
 			}
 		}
 
-		private function loadClass($argument, $subfix = '', $defaultPath = '') {
+		private function _loadClass($argument, $subfix = '', $defaultPath = '') {
 			$className = $argument[0];
 			$baseDir = DIRECTORY_SEPARATOR;
 			if (count($argument) > 1) {
@@ -51,6 +52,32 @@
 			
 			return false;
 		}
+
+		// public function loadClass($className, $dir) {
+		// 	static $classCache = array();
+		// 	if (isset($classCache[$className])) {
+		// 		return $classCache[$className];
+		// 	}
+		// 	if (empty($className) || empty($dir)) {
+		// 		return false;
+		// 	}
+
+		// 	$dir = trim($dir, '/\\');
+		// 	foreach (array(SYSPATH, APPPATH) as $root) {
+		// 		$path = $root.DIRECTORY_SEPARATOR.$dir.DIRECTORY_SEPARATOR;
+		// 		if (is_dir($path)) {
+		// 			if (file_exists($path.$className.'.php')) {
+		// 				require($path.$className.'.php');
+		// 				if (class_exists($className)) {
+		// 					$classCache[$className] = new $className();
+		// 					return $classCache[$className];
+		// 				}
+		// 			}
+		// 		}
+		// 	}
+			
+		// 	return false;
+		// }
 	}
 
 ?>
